@@ -33,6 +33,11 @@ public class Main implements QuarkusApplication {
             option.setRequired(false);
             options.addOption(option);
         }
+        {
+            Option option = new Option("d", "database", true, "database");
+            option.setRequired(false);
+            options.addOption(option);
+        }
 
 
         CommandLineParser parser = new DefaultParser();
@@ -47,6 +52,9 @@ public class Main implements QuarkusApplication {
             }
             if (cmd.hasOption("address")) {
                 cs.setAddress(cmd.getOptionValue("address").trim());
+            }
+            if (cmd.hasOption("database")) {
+                cs.setDatabase(cmd.getOptionValue("database").trim());
             }
             String query = cmd.getArgList().get(0);
             return cs.query(query);

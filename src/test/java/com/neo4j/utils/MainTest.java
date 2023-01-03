@@ -15,7 +15,8 @@ public class MainTest {
 
     @Test
     public void testWithQueryArgument(QuarkusMainLauncher launcher) {
-        LaunchResult result = launcher.launch("-u neo4j", "-p test1234", "-a neo4j://localhost:7687", "match (n) return count(*);");
+        LaunchResult result = launcher.launch("-u neo4j", "-p test1234", "-a neo4j://localhost:7687",
+                "-d movies","match (n) return count(*);");
         assertEquals(0, result.exitCode());
         assertTrue(result.getOutput().contains("count(*)"));
     }

@@ -1,10 +1,6 @@
 package com.neo4j.utils;
 
-import org.neo4j.driver.AuthTokens;
-import org.neo4j.driver.Driver;
-import org.neo4j.driver.GraphDatabase;
-import org.neo4j.driver.Result;
-import org.neo4j.driver.Session;
+import org.neo4j.driver.*;
 
 import javax.enterprise.context.ApplicationScoped;
 
@@ -14,6 +10,7 @@ public class CypherService {
     private String userName = "neo4j";
     private String password = "test1234";
     private String address = "neo4j://localhost:7687";
+    private String database = "neo4j";
     private Driver driver = null;
 
     private Driver getDriver() {
@@ -28,7 +25,7 @@ public class CypherService {
     }
 
     public int query(String query) {
-        try (Session session = getDriver().session()) {
+        try (Session session = getDriver().session(SessionConfig.builder().withDatabase(database).build())) {
             Result res = session.run(query);
 
             res.forEachRemaining(record ->
@@ -54,6 +51,10 @@ public class CypherService {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setDatabase(String database) {
+        this.database = database;
     }
 
 }
